@@ -62,16 +62,20 @@ class StrangeHorizons(BasicNewsRecipe):
 				# Get the list of reviews included in this issue. (Kludgey.)
 				reviews_summary = heading_tag.findNextSibling('p', attrs={'class': 'contents-pullquote'})
 				for br in reviews_summary.findAll('br'):
-					br.replaceWith('----')
+					br.replaceWith(' ----')
 				review_summary_text = self.tag_to_string(reviews_summary)
 				review_lines = review_summary_text.split(' ----')
+				review_count = min(len(review_lines), 3)
 
 				# Look for each of the needed reviews (there are 3, right?)...
-				for review_info in review_lines[0:3]:
+				for review_info in review_lines[0:review_count]:
 
 					# Get the review's release day (unused), title, and author.
 					day, tna = review_info.split(': ', 1)
-					article_title, article_author = tna.split(', reviewed by ')
+					try:
+						article_title, article_author = tna.split(', reviewed by ')
+					except:
+						article_title, article_author = tna.split(', by ')
 
 					# ... in the list of recent reviews.
 					for review_title_tag in review_titles:
