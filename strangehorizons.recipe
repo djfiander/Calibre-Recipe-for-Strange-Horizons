@@ -103,6 +103,7 @@ class StrangeHorizons(BasicNewsRecipe):
 					else:
 						# Try http://www.strangehorizons.com/reviews/archives.shtml
 						self.log("Review not found in Recent Reviews:", article_title)
+						break
 
 			else:
 
